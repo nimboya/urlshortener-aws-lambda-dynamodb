@@ -34,8 +34,9 @@ def shorten():
 @app.route('/{identifier}', methods=['GET'])
 def retrieve(identifier):
     try:
-        record = DDB.get_item(Key={'identifier': {'S': identifier}},
+        record = DDB.get_item(Key={'urlid': {'S': identifier}},
         TableName=os.environ['APP_TABLE_NAME'])
+        
     except Exception as e:
         raise NotFoundError(identifier)
     

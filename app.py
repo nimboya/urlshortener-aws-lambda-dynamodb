@@ -1,6 +1,7 @@
 import os
 import boto3
 import hashlib
+import random
 from chalice import Chalice, Response, BadRequestError
 from chalice import NotFoundError
 
@@ -12,12 +13,13 @@ DDB = boto3.client('dynamodb')
 @app.route('/', methods=['POST'])
 def shorten():
     url = app.current_request.json_body.get('url','')
+    urlid = random.randint(100,9999999999)
     if not url:
         raise BadRequestError("Missing URL")
     digest = hashlib.md5(url).hexdigest()[:6]
     DDB.put_item(
         TableName=os.environ['APP_TABLE_NAME'],
-        Item={'urlid':{'N': digest},
+        Item={'urlid':{'N': urlid},
               'identifier':{'S': digest},
               'url':{'S':url}})
     return {'shortened': digest}

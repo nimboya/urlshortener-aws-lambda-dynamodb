@@ -4,7 +4,7 @@ import hashlib
 from chalice import Chalice, Response, BadRequestError
 from chalice import NotFoundError
 
-app = Chalice(app_name='shortener')
+app = Chalice(app_name='itsshort')
 app.debug = True
 
 DDB = boto3.client('dynamodb')

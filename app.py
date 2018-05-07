@@ -19,7 +19,7 @@ def shorten():
     digest = hashlib.md5(url).hexdigest()[:6]
     DDB.put_item(
         TableName=os.environ['APP_TABLE_NAME'],
-        Item={'urlid':{'N': urlid},
+        Item={'urlid':{'S': urlid},
               'identifier':{'S': digest},
               'url':{'S':url}})
     return {'shortened': digest}

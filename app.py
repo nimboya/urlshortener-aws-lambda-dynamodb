@@ -10,7 +10,11 @@ app.debug = True
 
 DDB = boto3.client('dynamodb')
 
-@app.route('/', methods=['POST'])
+@app.route('/')
+def index():
+    return {'status':'its short for all URLs'}
+
+@app.route('/shorten', methods=['POST'])
 def shorten():
     url = app.current_request.json_body.get('url','')
     urlid = hashlib.md5(url).hexdigest()[:10]

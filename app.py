@@ -40,7 +40,7 @@ def retrieve(identifier):
         raise NotFoundError(identifier)
     
     # Response Data
-    urlid = hashlib.md5(url).hexdigest()[:10]
+    urlid = hashlib.md5(identifier).hexdigest()[:10]
     headers = app.current_request.to_dict()
     context = app.current_request.context
     sourceip = context['identity']['sourceIp']
@@ -54,7 +54,6 @@ def retrieve(identifier):
               'sourceip':{'S': sourceip},
               'useragent':{'S': useragent},
               'timestamp':{'S':timestamp}})
-    )
 
     return Response(status_code=301,
                    headers={'Location': record['Item']['url']['S']}, body='')

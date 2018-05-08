@@ -20,16 +20,15 @@ def index():
 def shorten():
     url = app.current_request.json_body.get('url','')
     timestamp = datetime.now().replace(microsecond=0).isoformat()
-    urlid = hashlib.md5(url).hexdigest()[:10]
+    urlid = hashlib.md5(url).hexdigest()[:6]
     if not url:
         raise BadRequestError("Missing URL")
-    digest = hashlib.md5(url).hexdigest()[:6]
     DDB.put_item(
         TableName=os.environ['APP_TABLE_NAME'],
         Item={'urlid':{'S': urlid},
               'timestamp':{'S': timestamp},
               'url':{'S':url}})
-    return {'shortened': digest}
+    return {'shortened': urlid}
 
 @app.route('/{identifier}', methods=['GET'])
 def retrieve(identifier):

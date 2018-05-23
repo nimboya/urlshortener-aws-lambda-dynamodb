@@ -3,6 +3,7 @@ import os
 import boto3
 import hashlib
 import random
+import time
 from datetime import datetime
 from chalice import Chalice, Response, BadRequestError
 from chalice import NotFoundError
@@ -40,7 +41,8 @@ def retrieve(identifier):
         raise NotFoundError(identifier)
     
     # Response Data
-    urlid = hashlib.md5(identifier).hexdigest()[:10]
+    ts = time.time()
+    urlid = hashlib.md5(ts).hexdigest()[:10]
     headers = app.current_request.to_dict()
     context = app.current_request.context
     sourceip = context['identity']['sourceIp']

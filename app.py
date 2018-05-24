@@ -39,7 +39,8 @@ def retrieve(identifier):
         
     except Exception as e:
         raise NotFoundError(identifier)
-    
+
+
     # Response Data
     ts = time.time()
     urlid = hashlib.md5(ts).hexdigest()[:10]
@@ -48,10 +49,14 @@ def retrieve(identifier):
     sourceip = context['identity']['sourceIp']
     useragent = headers['headers']['user-agent']
     timestamp = datetime.now().replace(microsecond=0).isoformat()
+    # Generate Fingerprint
+    fprintstr = sourceip . useragent
+    fprint = hashlib.md5(fprintstr).hexdigest()
 
     DDB.put_item(
         TableName=os.environ['APP_TABLE_NAME'],
         Item={'urlid':{'S': urlid},
+              'fprint':{'S': fprint},
               'identifier':{'S': identifier},
               'sourceip':{'S': sourceip},
               'useragent':{'S': useragent},

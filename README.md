@@ -15,7 +15,7 @@ Create `.chalice/config.json`
 ```console
 $ cat .chalice/config.json
 {
- "app_name": "linebot",
+ "app_name": "itsshort",
  "stage": "dev"
 }
 {

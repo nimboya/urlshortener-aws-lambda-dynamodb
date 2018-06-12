@@ -15,10 +15,6 @@ Create `.chalice/config.json`
 ```console
 $ cat .chalice/config.json
 {
- "app_name": "itsshort",
- "stage": "dev"
-}
-{
     "stages": {
         "dev": {
         "api_gateway_stage": "api",
